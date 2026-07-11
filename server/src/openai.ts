@@ -27,22 +27,7 @@ export async function createTranslationToken(
       "Content-Type": "application/json",
       "OpenAI-Safety-Identifier": hashDeviceId(request.deviceId),
     },
-    body: JSON.stringify({
-      session: {
-        model: "gpt-realtime-translate",
-        audio: {
-          input: {
-            transcription: { model: "gpt-realtime-whisper" },
-            noise_reduction: { type: request.noiseReduction },
-          },
-          output: { language: "en" },
-        },
-      },
-      expires_after: {
-        anchor: "created_at",
-        seconds: 600,
-      },
-    }),
+    body: JSON.stringify(buildClientSecretRequestBody(request)),
     signal: AbortSignal.timeout(10_000),
   });
 
@@ -67,6 +52,26 @@ export async function createTranslationToken(
   };
 }
 
+export function buildClientSecretRequestBody(
+  request: TranslationTokenRequest,
+): object {
+  return {
+    session: {
+      model: "gpt-realtime-translate",
+      audio: {
+        input: {
+          noise_reduction: { type: request.noiseReduction },
+        },
+        output: { language: "en" },
+      },
+    },
+    expires_after: {
+      anchor: "created_at",
+      seconds: 600,
+    },
+  };
+}
+
 export function hashDeviceId(deviceId: string): string {
   return createHash("sha256").update(deviceId).digest("hex");
 }
@@ -84,4 +89,3 @@ function isClientSecretResponse(
     typeof candidate.expires_at === "number"
   );
 }
-

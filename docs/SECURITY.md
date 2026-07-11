@@ -14,6 +14,7 @@ The bootstrap bearer token in the initial server is suitable only for a bounded 
 - Stream microphone audio only while the app is foregrounded and Listening.
 - Pause and Stop are explicit capture boundaries.
 - Keep caption history in memory only.
+- Keep optional Portuguese source transcription disabled by default.
 - Require explicit action for copying session text or recording diagnostics.
 - Redact upstream error bodies from client responses and routine logs.
 
@@ -35,4 +36,3 @@ The bootstrap bearer token in the initial server is suitable only for a bounded 
 - Transcript or secret disclosure through logs.
 - Unbounded token issuance or duration-billed sessions.
 - Diagnostic recordings remaining on a shared device.
-

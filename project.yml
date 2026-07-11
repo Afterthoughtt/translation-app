@@ -52,6 +52,9 @@ targets:
       properties:
         CFBundleDisplayName: Interpreter
         NSMicrophoneUsageDescription: This app uses the microphone to translate nearby Portuguese speech into English.
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        InterpreterTokenServiceBaseURL: "$(INTERPRETER_TOKEN_SERVICE_BASE_URL)"
         UIApplicationSupportsIndirectInputEvents: true
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
@@ -83,6 +86,21 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: "$(INTERPRETER_BUNDLE_ID).core-tests"
 
+  InterpreterAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/InterpreterAppTests
+    dependencies:
+      - target: Interpreter
+    configFiles:
+      Debug: Config/Debug.xcconfig
+      Release: Config/Release.xcconfig
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: "$(INTERPRETER_BUNDLE_ID).app-tests"
+
 schemes:
   Interpreter:
     build:
@@ -97,6 +115,7 @@ schemes:
       gatherCoverageData: true
       targets:
         - InterpreterCoreTests
+        - InterpreterAppTests
     profile:
       config: Release
     analyze:

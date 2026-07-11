@@ -4,3 +4,6 @@
 INTERPRETER_BUNDLE_ID = com.example.Interpreter
 INTERPRETER_DEVELOPMENT_TEAM =
 
+// Use http:/$()/127.0.0.1:8787 for a Simulator-only local service.
+// Use an HTTPS origin for a physical device or deployed build.
+INTERPRETER_TOKEN_SERVICE_BASE_URL = http:/$()/127.0.0.1:8787

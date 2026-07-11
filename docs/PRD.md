@@ -77,7 +77,7 @@ Use:
 
 - Model: `gpt-realtime-translate`
 - Target output language: `en`
-- Optional source transcript: `gpt-realtime-whisper`
+- Optional diagnostic source transcript: `gpt-realtime-whisper`, disabled by default
 - WebRTC calls endpoint: `/v1/realtime/translations/calls`
 - Data channel: `oai-events`
 - Client-secret endpoint: `/v1/realtime/translations/client_secrets`
@@ -134,7 +134,7 @@ Expose `POST /api/translation-token` with a maximum 2 KB JSON body:
 }
 ```
 
-Reject missing, unknown, oversized, or invalid fields. Hard-code the model, source-transcription model, target language, and client-secret TTL server-side. Return only normalized errors to the app.
+Reject missing, unknown, oversized, or invalid fields. Hard-code the model, target language, and client-secret TTL server-side. If diagnostic source transcription is explicitly enabled in a future build, hard-code its model server-side. Return only normalized errors to the app.
 
 The initial side-loaded build may use a long random bootstrap bearer token stored in Keychain, but production readiness requires either per-install enrollment and revocation or private-network restriction. Rate-limit by installation and network source, and support an operational duration or spending ceiling.
 

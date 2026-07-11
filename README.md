@@ -13,6 +13,8 @@ The repository currently provides:
 - A tested platform-neutral Swift core for transcript assembly and conservative output routing.
 - A reproducibly generated Xcode project for the SwiftUI app and core tests.
 - A TypeScript token service with strict input validation, bounded requests, rate limiting, safe upstream error handling, and OpenAI client-secret creation.
+- iOS service boundaries for microphone permission, audio-session control, token retrieval, Keychain credentials, and replaceable translation transport.
+- A strict, cancellable Swift token-service client and foreground privacy handling.
 
 Xcode 26.6 is installed. The repository uses XcodeGen so the generated `.xcodeproj` stays local and the human-readable `project.yml` remains the source of truth. Device signing, the native WebRTC dependency, and the physical-device connectivity spike are intentionally not represented as complete.
 
@@ -32,6 +34,8 @@ make check
 ```
 
 Do not place a real API key in `.env.example` or commit `server/.env`.
+
+For local iOS development, copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`. The example uses the Simulator-only loopback token-service URL. Physical-device and deployed builds require an HTTPS token-service origin. The pilot bearer token is read from Keychain and is never accepted through an xcconfig or Info.plist value.
 
 ## Source of truth
 
