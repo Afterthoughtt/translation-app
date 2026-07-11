@@ -1,0 +1,6 @@
+// Copy this file to Local.xcconfig and fill these values when device signing begins.
+// Local.xcconfig is intentionally ignored by Git.
+
+INTERPRETER_BUNDLE_ID = com.example.Interpreter
+INTERPRETER_DEVELOPMENT_TEAM =
+

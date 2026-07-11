@@ -1,0 +1,14 @@
+.DS_Store
+.build/
+.swiftpm/
+DerivedData/
+Interpreter.xcodeproj/
+Config/Local.xcconfig
+apps/Interpreter/Resources/Info.plist
+xcuserdata/
+*.xcuserstate
+node_modules/
+server/dist/
+server/.env
+*.log
+tmp/

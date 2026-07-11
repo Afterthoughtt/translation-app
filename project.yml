@@ -1,0 +1,105 @@
+name: Interpreter
+
+options:
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: en
+  generateEmptyDirectories: true
+  groupSortPosition: top
+  minimumXcodeGenVersion: 2.45.4
+
+configs:
+  Debug: debug
+  Release: release
+
+settings:
+  base:
+    CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
+    CODE_SIGN_STYLE: Automatic
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: 0.1.0
+
+targets:
+  InterpreterCore:
+    type: framework
+    platform: iOS
+    sources:
+      - path: Sources/InterpreterCore
+    configFiles:
+      Debug: Config/Debug.xcconfig
+      Release: Config/Release.xcconfig
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: "$(INTERPRETER_BUNDLE_ID).core"
+        SKIP_INSTALL: YES
+
+  Interpreter:
+    type: application
+    platform: iOS
+    sources:
+      - path: apps/Interpreter
+        excludes:
+          - README.md
+    dependencies:
+      - target: InterpreterCore
+    configFiles:
+      Debug: Config/Debug.xcconfig
+      Release: Config/Release.xcconfig
+    info:
+      path: apps/Interpreter/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: Interpreter
+        NSMicrophoneUsageDescription: This app uses the microphone to translate nearby Portuguese speech into English.
+        UIApplicationSupportsIndirectInputEvents: true
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        DEVELOPMENT_TEAM: "$(INTERPRETER_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(INTERPRETER_BUNDLE_ID)"
+        PRODUCT_NAME: Interpreter
+        SUPPORTS_MACCATALYST: NO
+
+  InterpreterCoreTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/InterpreterCoreTests
+    dependencies:
+      - target: InterpreterCore
+    configFiles:
+      Debug: Config/Debug.xcconfig
+      Release: Config/Release.xcconfig
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: "$(INTERPRETER_BUNDLE_ID).core-tests"
+
+schemes:
+  Interpreter:
+    build:
+      targets:
+        Interpreter: all
+        InterpreterCore: all
+        InterpreterCoreTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - InterpreterCoreTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
